@@ -1,0 +1,73 @@
+﻿@model List<Presentation.Models.UserViewModel>
+
+@{
+    ViewData["Title"] = "MyVehicles";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/users.css" />
+</head>
+
+<div class="text-center">
+    <h1 class="display-4">Users</h1>
+</div>
+<br />
+@foreach (var user in Model)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title" onclick="toggleUserDetails('@user.Id')"> @user.Name @user.Surname </h5>
+            <div id="UserDetails_@user.Id" class="table-responsive hidden" >
+                <table class="table table-bordered">
+                    <tr>
+                        <td>DNI</td>
+                        <td>@user.DNI</td>
+                    </tr>
+                    <tr>
+                        <td>License</td>
+                        <td>@user.License</td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td>@user.Phone</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-link" onclick="toggleVehicleDetails('@user.Id')">@user.Vehicles.Count Vehicles</button>
+                        </td>
+                    </tr>
+                </table>
+                <div id="VehicleDetails_@user.Id" class="table-responsive" >
+                    <table class="table table-striped">
+                        @if (user.Vehicles != null)
+                        {
+                            <thead>
+                                <tr>
+                                    <th>Brand</th>
+                                    <th>Model</th>
+                                    <th>Engine</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var vehicle in user.Vehicles)
+                                {
+                                    <tr>
+                                        <td>@vehicle.Brand</td>
+                                        <td>@vehicle.Model</td>
+                                        <td>@vehicle.Engine</td>
+                                        <td>@vehicle.Category</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/users.js"></script>
+}
